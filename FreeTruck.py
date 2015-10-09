@@ -113,13 +113,40 @@ class truck_base:
 
     FreeCAD.ActiveDocument.getObject('Pocket001').Placement = new_position
     cm.cameraUpdate()
+    cl.update()
     FreeCAD.Gui.updateGui()
     
+
+#------------------------------------------------------------------------------#
+# collision detector
+#------------------------------------------------------------------------------#
+scenery_shape = FreeCAD.ActiveDocument.getObject("Pad004005")
+"""
+Collision vertexes
+22-10    
+|  |    / \
+|  |     |
+8 -7
+"""
+class collision:
+  def __init__(self):
+    self.collision_vertexes = (10, 22, 8, 7 )
+    self.scenery_shape = FreeCAD.ActiveDocument.getObject("Pad004005").Shape
+    
+  def update(self):
+    # stop truck if it collides with the scenery
+    base_obj = retrieveObject('Pocket001')
+    for vertex in self.collision_vertexes:
+      test_point = base_obj.Shape.Vertexes[vertex].Point
+      if self.scenery_shape.isInside( test_point, 1, True ):
+        tb.forward_speed = 0.0
+
+
 
 
 tb = truck_base()
 cm = scene_camera()
-
+cl = collision()
 
     
 #------------------------------------------------------------------------------#
@@ -145,10 +172,10 @@ class Keyboard:
         tb.forward_speed = tb.throttle_position
     
     if key == 'q' and (down):
-      tb.yaw_angle += 1*tb.forward_speed/5.0
+      tb.yaw_angle += 1*tb.forward_speed/7.0
     
     if key == 'e' and (down):
-      tb.yaw_angle -= 1*tb.forward_speed/5.0
+      tb.yaw_angle -= 1*tb.forward_speed/7.0
     
     if key == 'c' and (down):
       cm.chase_cam = True
@@ -167,4 +194,7 @@ c = v.addEventCallback("SoKeyboardEvent", o.printOnPress)
 timer = QtCore.QTimer()
 timer.timeout.connect( tb.update)
 timer.start(50)
+
+
+
 
