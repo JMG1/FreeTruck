@@ -1,9 +1,9 @@
 # -*- coding: utf-8 -*-
 # FreeCAD 'FreeTruck' game script
-# (c) 2014 Javier Martínez García
+# (c) 2015 Javier Martínez García
  
 #***************************************************************************
-#*   (c) Javier Martínez García 2014                                       *   
+#*   (c) Javier Martínez García 2015                                       *   
 #*                                                                         *
 #*   This program is free software; you can redistribute it and/or modify  *
 #*   it under the terms of the GNU Lesser General Public License (LGPL)    *
